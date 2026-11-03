@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, BookOpen, Boxes, Braces, Check, Code2, ExternalLink, GitBranch, Github, Layers3, Menu, ShieldCheck, Sparkles, Terminal, Workflow, X } from 'lucide-react';
+import CodeReviewArena from './features/code-review-arena/CodeReviewArena';
 import MissionControl from './features/mission-control/MissionControl';
 
 type Project = {
@@ -134,6 +135,7 @@ export default function App() {
 
       <MissionControl />
 
+      <CodeReviewArena />
       <section className="cta-section shell section-space"><div className="cta-box"><div className="cta-top">LET'S BUILD SOMETHING USEFUL <ArrowUpRight size={18}/></div><h2>Complex systems.<br/><span>Clear thinking.</span></h2><p>Explore the code, architecture, and decisions behind my work.</p><div className="cta-actions"><a className="primary-button" href="https://github.com/matthewfreeman821" target="_blank" rel="noopener noreferrer"><Github size={19}/> Explore GitHub <ArrowUpRight size={18}/></a><button className="secondary-button" onClick={copyProfile}>{copied ? <Check size={18}/> : <ExternalLink size={18}/>} {copied ? 'Link copied' : 'Copy profile link'}</button></div></div></section>
     </main>
     <footer className="footer shell"><div><strong>MF<span>.</span></strong><span>© {new Date().getFullYear()} Matthew Freeman</span></div><div><span>ENGINEERED WITH INTENT</span><a href="#home">Back to top ↑</a></div></footer>
