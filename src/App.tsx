@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, BookOpen, Boxes, Braces, Check, Code2, ExternalLink, GitBranch, Github, Layers3, Menu, ShieldCheck, Sparkles, Terminal, Workflow, X } from 'lucide-react';
+import MissionControl from './features/mission-control/MissionControl';
 
 type Project = {
   number: string;
@@ -130,6 +131,8 @@ export default function App() {
       </div></div></section>
 
       <section id="process" className="ai-section shell section-space"><div className="section-heading"><span className="section-index">03 / AI × ENGINEERING</span><h2>AI is in the <em>workflow.</em><br/>Judgment is in the <em>driver's seat.</em></h2></div><div className="ai-grid"><div className="ai-copy"><div className="ai-symbol"><Sparkles size={32}/></div><p>I don't hide AI use. I use coding agents to explore, build, review, and test—but I don't outsource the responsibility to understand what the software does.</p><div className="ai-quote">“AI can accelerate the work. Engineering judgment determines its quality.”</div></div><div className="process-list">{aiSteps.map((step, i) => <div className="process-step" key={step.title}><span className="process-n">0{i+1}</span><div><h3>{step.title}</h3><p>{step.sub}</p></div><Check size={17}/></div>)}</div></div></section>
+
+      <MissionControl />
 
       <section className="cta-section shell section-space"><div className="cta-box"><div className="cta-top">LET'S BUILD SOMETHING USEFUL <ArrowUpRight size={18}/></div><h2>Complex systems.<br/><span>Clear thinking.</span></h2><p>Explore the code, architecture, and decisions behind my work.</p><div className="cta-actions"><a className="primary-button" href="https://github.com/matthewfreeman821" target="_blank" rel="noopener noreferrer"><Github size={19}/> Explore GitHub <ArrowUpRight size={18}/></a><button className="secondary-button" onClick={copyProfile}>{copied ? <Check size={18}/> : <ExternalLink size={18}/>} {copied ? 'Link copied' : 'Copy profile link'}</button></div></div></section>
     </main>
