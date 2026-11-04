@@ -1,3 +1,67 @@
+import { useState } from 'react';
+import ReviewOps from './features/review-ops/ReviewOps';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, BookOpen, Boxes, Braces, Check, Code2, ExternalLink, GitBranch, Github, Layers3, Menu, ShieldCheck, Terminal, Workflow, X } from 'lucide-react';
+
+type Project = {
+  number: string;
+  name: string;
+  category: string;
+  description: string;
+  details: string;
+  tags: string[];
+  image?: string;
+  imageAlt?: string;
+  url: string;
+  note?: string;
+  icon: 'workflow' | 'books' | 'board';
+};
+
+const projects: Project[] = [
+  {
+    number: '01', name: 'BenchFlow', category: 'Operations · Reliability',
+    description: 'A repair workflow where permission, inventory, quality, and handoff stay accountable.',
+    details: 'Permission-aware operations, atomic inventory reservations, idempotency, and traceable decisions.',
+    tags: ['Python', 'SQLite', 'Workflow Design', 'Testing'],
+    image: 'https://raw.githubusercontent.com/matthewfreeman821/benchflow/main/docs/images/repair-docket.png',
+    imageAlt: 'BenchFlow fictional repair docket interface',
+    url: 'https://github.com/matthewfreeman821/benchflow', icon: 'workflow'
+  },
+  {
+    number: '02', name: 'Shelf Sense', category: 'Local-first · Data Ownership',
+    description: 'A personal library that keeps books, notes, and backups on the user’s own computer.',
+    details: 'SQLite persistence, assisted barcode/OCR entry, import/export, and deliberate recovery.',
+    tags: ['Python', 'SQLite', 'OCR', 'Local-first'],
+    image: 'https://raw.githubusercontent.com/matthewfreeman821/shelf-sense/main/docs/screenshots/library-desktop.png',
+    imageAlt: 'Shelf Sense fictional desktop library interface',
+    url: 'https://github.com/matthewfreeman821/shelf-sense', icon: 'books'
+  },
+  {
+    number: '03', name: "Author’s Board", category: 'Creative Tools · In development',
+    description: 'A visual workspace for fiction writers to connect characters, places, and events.',
+    details: 'Spatial references, relationships, and clear separation between story canon and calculated information.',
+    tags: ['Python', 'SQLite', 'JavaScript', 'In development'],
+    url: 'https://github.com/matthewfreeman821/authors-board',
+    note: 'Public overview available. Source and product screenshots are being prepared for release.', icon: 'board'
+  }
+];
+
+const skills = [
+  { heading: '01 / Interface', icon: <Layers3 size={21}/>, items: 'React · TypeScript · JavaScript · Accessible UI' },
+  { heading: '02 / Services', icon: <Braces size={21}/>, items: 'Java · Spring Boot · REST APIs · SQL' },
+  { heading: '03 / Systems', icon: <Boxes size={21}/>, items: 'AWS · Redis · Docker · CI/CD · Authentication' },
+  { heading: '04 / AI operations', icon: <ShieldCheck size={21}/>, items: 'Copilot Enterprise · Agent orchestration · Review guardrails' },
+];
+
+const aiSteps = [
+  { title: 'Establish the contract', sub: 'Acceptance criteria, codebase context, permissions, and non-negotiable constraints' },
+  { title: 'Direct the work', sub: 'Use agents for implementation, investigation, testing, and bounded analysis' },
+  { title: 'Challenge the output', sub: 'Compare independent reviews, investigate disagreements, reject unsupported findings' },
+  { title: 'Own the release decision', sub: 'Validate against real behavior, trace evidence, and maintain engineering accountability' },
+];
+
+const engineeringCases = [
+  {number: '01', track: 'IDENTITY / SECURITY', title: 'Session boundaries and logout reliability',
+    problem: 'Account switching can fail even when the application appears to clear its authentication state.',
     approach: 'Examine frontend state, identity-provider sessions, logout redirects, token hints, and cross-account browser behavior as separate boundaries.',
     proof: 'Verification focus: browser traces, logout configuration, provider behavior, and controlled cross-account tests.'},
   {number: '02', track: 'PLATFORM / MODERNIZATION', title: 'Frontend modernization at system scale',
