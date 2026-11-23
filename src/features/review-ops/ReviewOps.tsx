@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import ScenarioLab from './ScenarioLab';
 
 type Severity = 'critical' | 'high' | 'medium' | 'low' | 'info';
 type Verdict = 'investigate' | 'confirmed' | 'dismissed';
@@ -66,13 +67,13 @@ export default function ReviewOps(){
  const [mergeTarget,setMergeTarget]=useState('');
  const [filter,setFilter]=useState<'all'|'unresolved'|'correlated'>('all');
  const issues=useMemo(()=>buildIssues(items,member),[items,member]);
- const current=issues.find(g=>g.id===active)??issues[0];
  const displayed=issues.filter(g=>filter==='all'||(filter==='unresolved'?(notes[g.id]?.verdict??'investigate')==='investigate':g.reviewers.length>1));
+ const current=displayed.find(g=>g.id===active)??displayed[0];
  const resolved=issues.filter(g=>['confirmed','dismissed'].includes(notes[g.id]?.verdict??'investigate')).length;
  const multi=issues.filter(g=>g.reviewers.length>1).length;
  const disagreements=issues.filter(g=>g.diverges).length;
  const undocumented=issues.filter(g=>['confirmed','dismissed'].includes(notes[g.id]?.verdict??'investigate') && (!notes[g.id]?.rationale.trim()||!notes[g.id]?.evidence.trim())).length;
- const recordStatus=resolved===issues.length&&undocumented===0?'reviewed':'draft';
+ const recordStatus=issues.length>0&&resolved===issues.length&&undocumented===0?'reviewed':'draft';
  const decision=current?(notes[current.id]??blank()):blank();
  const updateDecision=(partial:Partial<Decision>)=>{if(current)setNotes(n=>({...n,[current.id]:{...(n[current.id]??blank()),...partial}}));};
  const apply=()=>{try{const parsed=parse(raw);setItems(parsed);setMember(autoMap(parsed));setNotes({});setActive('');setMergeTarget('');setError('');setImportOpen(false);}catch(e){setError(e instanceof Error?e.message:'Invalid JSON');}};
@@ -96,8 +97,10 @@ export default function ReviewOps(){
   .ro2-intake{border:1px solid var(--edge);border-top:0;background:#0d1e2d;padding:20px}.ro2-intake textarea{width:100%;height:180px;resize:vertical;background:#071722;color:#c5e3ef;border:1px solid #426174;padding:14px;font:11px/1.5 monospace}.ro2-intake p{font:12px/1.7 system-ui,sans-serif;color:#9fb9c9}.ro2-error{color:#ffbbb7;padding:10px;border-left:2px solid #ffb1a8;font-size:11px;margin-top:12px}.ro2-intake-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.ro2-footer{display:flex;justify-content:space-between;gap:20px;align-items:center;border:1px solid var(--edge);border-top:0;background:#112a39;padding:19px}.ro2-footer p{color:#a1becd;font:11px/1.7 system-ui,sans-serif;margin:4px 0}.ro2-disclaimer{margin-top:20px;font:11px/1.8 system-ui,sans-serif;color:#859dad}
   @media(max-width:1120px){.ro2-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}.ro2-grid>.ro2-panel:last-child{grid-column:1/-1}}@media(max-width:760px){.ro2{padding:60px 17px}.ro2-hero{grid-template-columns:1fr}.ro2 h2{letter-spacing:-2px}.ro2-metrics{grid-template-columns:repeat(2,1fr)}.ro2-metric:nth-child(2){border-right:0}.ro2-metric:nth-child(-n+2){border-bottom:1px solid var(--edge)}.ro2-grid{grid-template-columns:1fr}.ro2-grid>.ro2-panel:last-child{grid-column:auto}.ro2-footer{flex-direction:column;align-items:stretch}}@media(prefers-reduced-motion:reduce){.ro2 *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   `}</style>
-  <div className="ro2-head"><span>06 / ENGINEERING SYSTEMS / REVIEW OPS</span><span>REV 0.2 / LOCAL-FIRST</span></div>
-  <div className="ro2-hero"><div><div className="ro2-kicker">MULTI-AGENT REVIEW INTELLIGENCE</div><h2>Evidence over<br/><em>agent consensus.</em></h2><p className="ro2-lead">A browser-local workspace for consolidating AI code-review reports, correcting machine-suggested correlations, documenting technical judgment, and exporting decisions that can be audited.</p></div><div className="ro2-intro"><strong>NOT A SIMULATION.</strong> The correlation and grouping operate on the actual findings loaded into this page. The bundled data is fictional. No AI model or external API is called.</div></div>
+  <div className="ro2-head"><span>06 / ENGINEERING SYSTEMS / REVIEW OPS</span><span>REV 0.3 / LOCAL-FIRST</span></div>
+  <div className="ro2-hero"><div><div className="ro2-kicker">MULTI-AGENT REVIEW INTELLIGENCE</div><h2>Evidence over<br/><em>agent consensus.</em></h2><p className="ro2-lead">A browser-local workspace for consolidating AI code-review reports, correcting machine-suggested correlations, documenting technical judgment, and exporting decisions that can be audited.</p></div><div className="ro2-intro"><strong>FICTIONAL SCENARIOS. REAL DECISIONS.</strong> Inspect authored code changes and reviewer claims, then record your judgment. The report workspace below also supports local JSON imports. No AI model or GitHub API is called.</div></div>
+  <ScenarioLab />
+  <h3 className="ro2-title">Bring your own review reports</h3><p className="ro2-copy">Continue with the existing local correlation workspace. This report ledger is independent of the PR exercises above.</p>
   <div className="ro2-metrics"><div className="ro2-metric"><strong>{items.length}</strong><span>FINDINGS INGESTED</span></div><div className="ro2-metric"><strong>{issues.length}</strong><span>CORRELATED ISSUES</span></div><div className="ro2-metric"><strong>{multi}</strong><span>MULTI-REVIEWER</span></div><div className="ro2-metric"><strong>{resolved}/{issues.length}</strong><span>DISPOSITIONS COMPLETE</span></div></div>
   <div className="ro2-toolbar"><div><button className="ro2-btn" aria-pressed={filter==='all'} onClick={()=>setFilter('all')}>ALL</button><button className="ro2-btn" aria-pressed={filter==='unresolved'} onClick={()=>setFilter('unresolved')}>UNRESOLVED</button><button className="ro2-btn" aria-pressed={filter==='correlated'} onClick={()=>setFilter('correlated')}>MULTI-REVIEWER</button></div><div><button className="ro2-btn" aria-expanded={importOpen} onClick={()=>setImportOpen(v=>!v)}>{importOpen?'CLOSE IMPORT':'IMPORT / EDIT JSON'}</button><button className="ro2-primary" onClick={record}>EXPORT RECORD ↓</button></div></div>
   {importOpen&&<div className="ro2-intake"><label className="ro2-field"><span>REVIEWER REPORTS / JSON ARRAY / UP TO 250 ENTRIES</span><textarea spellCheck={false} value={raw} onChange={e=>setRaw(e.target.value)}/></label><p>Each record needs reviewer, file, line, severity, title, detail. Imports replace the current workspace and clear existing decisions. Processing happens locally; avoid confidential data on shared devices.</p>{error&&<div role="alert" className="ro2-error">{error}</div>}<div className="ro2-intake-actions"><button className="ro2-primary" onClick={apply}>PROCESS REVIEW REPORT</button><button className="ro2-btn" onClick={reset}>RESTORE SAMPLE</button></div></div>}

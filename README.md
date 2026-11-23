@@ -1,48 +1,41 @@
 # Matthew Freeman — Engineering Portfolio
 
-A React + TypeScript portfolio with a custom responsive visual design, real project links, AI-assisted engineering narrative, accessible navigation, and a GitHub Pages deployment workflow.
+React 18, TypeScript, and Vite. An engineering portfolio with repository-backed case studies, professional experience summaries, and a browser-local review workbench.
 
-## Requirements
+## Local development
 
-- Node.js 22 or later
-- npm
+Use Node.js 22 or newer and the pinned package manager (`corepack enable` if your Node installation includes Corepack, otherwise install the packageManager version listed in package.json).
 
-## Develop locally
-
-```bash
-npm install
-npm run dev
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm test
+pnpm build
+pnpm test:e2e
 ```
 
-Visit the local URL reported by Vite (usually `http://localhost:5173`).
+Browser checks use installed Microsoft Edge locally. CI installs Chromium; set `CI=1` to use Playwright Chromium locally after installing it with `pnpm exec playwright install chromium`.
 
-## Build
+## Review Ops
 
-```bash
-npm run build
-npm run preview
-```
+Two fictional PR exercises provide before/after code, acceptance criteria, authored reviewer perspectives, evidence dossiers, editable classification and severity, and a release verdict. A counterexample in a dossier is reasoned evidence, not a claim of executed SQL/Redis tests. Optional reference assessments are authored teaching material, never live AI output. An executable browser model lets visitors step through a last-unit race and compare an atomic guard; it is explicitly not a SQL/driver simulation.
 
-## Deploy for free with GitHub Pages
+The gate requires a rationale and evidence reference for every claim. Confirmed defects request changes; risks hold for verification; otherwise the exercise is ready for human approval. The gate does not validate the quality of entered evidence. Scenario decisions are isolated, remain in tab memory until reload, and export as JSON with provenance and limitations.
 
-1. Create a **public** repository named `matthewfreeman821.github.io` under your GitHub account.
-2. Upload the contents of this folder, including `.github/workflows/deploy.yml`, to the repository's `main` branch. GitHub's web upload may omit hidden folders on some platforms; ensure `.github/workflows/deploy.yml` exists.
-3. In **Settings → Pages → Build and deployment**, select **GitHub Actions** as the source.
-4. Push/commit changes to `main`. Check the **Actions** tab for the deployment result.
-5. Once successful, visit `https://matthewfreeman821.github.io/`.
+The independent report workspace preserves JSON imports, deterministic correlation, manual split/merge, human dispositions, and JSON export. It uses word overlap and file proximity; false correlations and missed duplicates remain possible. Merge/split invalidate affected dispositions. Empty reports remain draft.
 
-Using the special `username.github.io` repository name keeps the Vite `base: '/'` configuration correct. Other repository names require setting `base` to `/<repo-name>/` in `vite.config.ts`.
+No AI service, GitHub authentication, external API execution, browser storage, or confidential employer code is involved in Review Ops. No export re-import or persistence across reload is implemented.
 
-GitHub Pages and standard public-repository Actions use are generally available without a separate hosting subscription, subject to your GitHub plan and usage limits. Do not activate any paid plan, domain, service, or add-on. Review GitHub's current account billing settings before any optional upgrade.
+## Evidence and scope
 
-## Content and attribution
+- BenchFlow and Shelf Sense descriptions are grounded in their public architecture, implementation, and test files; links appear on each project card.
+- Enterprise accomplishments are owner-provided experience summaries. Redis timing is not an independently reproduced public benchmark.
+- The API Gateway/JWT design is explicitly a proposal approved by the backend lead, with broader review pending.
+- Author’s Board remains in development.
+- Project screenshots show fictional data and load from the existing public repositories. Fonts and those images require network access; review interactions run locally.
 
-- BenchFlow and Shelf Sense screenshots are loaded from the owner's public GitHub repositories.
-- Author's Board is explicitly labeled in development; no product screenshot, released source, or public demo is falsely claimed.
-- The abstract systems graphic is custom CSS/React decoration, not a representation of any specific production architecture.
-- No private corporate source code or screenshots are included.
-- AI-assisted development is described openly.
+## Verification and release
 
-## Next iteration ideas
+`verify.yml` is manual-only and builds/tests without deploying. It is not dispatched as part of this work; validation is performed locally to avoid consuming hosted CI allowances. `deploy.yml` deploys only on a main-branch push or an explicit manual dispatch. Branch pushes and PR creation do not deploy this portfolio. Merging to main triggers deployment and requires owner approval outside this change.
 
-Add an actual contact email only after confirming it is intended for public publication; replace the abstract Author's Board panel with a reviewed public screenshot when available; add a working demo link after deployment is verified.
+Do not dispatch deployment or merge without the owner’s explicit approval. No additional hosting service is required for this change.
