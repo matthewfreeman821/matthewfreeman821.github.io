@@ -1,6 +1,6 @@
 # Matthew Freeman — Engineering Portfolio
 
-React 18, TypeScript, and Vite. An engineering portfolio with repository-backed case studies, professional experience summaries, and a browser-local review workbench.
+React 18, TypeScript, and Vite. An engineering portfolio with repository-backed case studies,  a browser-local review workbench.
 
 ## Local development
 
@@ -29,8 +29,6 @@ No AI service, GitHub authentication, external API execution, browser storage, o
 ## Evidence and scope
 
 - BenchFlow and Shelf Sense descriptions are grounded in their public architecture, implementation, and test files; links appear on each project card.
-- Enterprise accomplishments are owner-provided experience summaries. Redis timing is not an independently reproduced public benchmark.
-- The API Gateway/JWT design is explicitly a proposal approved by the backend lead, with broader review pending.
 - Author’s Board remains in development.
 - Project screenshots show fictional data and load from the existing public repositories. Fonts and those images require network access; review interactions run locally.
 
